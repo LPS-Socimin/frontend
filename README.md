@@ -1,5 +1,8 @@
 # FrontEnd - Socimin
 
+Projeto desenvolvido para disciplina de Tópicos em Engenharia de Software: Projetando Linhas de Produto de Software.
+ 
+
 ## Tecnologias e Padrões Utilizados
 
 * **HTML5 Semântico & CSS3:** Estilização responsiva, componentizada e reutilizável.
