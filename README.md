@@ -1,13 +1,13 @@
 # FrontEnd - Socimin
 
-## 🛠️ Tecnologias e Padrões Utilizados
+## Tecnologias e Padrões Utilizados
 
 * **HTML5 Semântico & CSS3:** Estilização responsiva, componentizada e reutilizável.
 * **Vanilla JavaScript (ES6+):** Motor assíncrono para manipulação do DOM e gestão de estado.
 * **Roteamento SPA Customizado:** Sistema de *Single Page Application* construído do zero, injetando vistas e controladores dinamicamente.
 * **Gateway / Mock Backend:** Uso do padrão arquitetural Gateway acoplado ao `LocalStorage` para simular requisições assíncronas, persistência de banco de dados e validação de Tokens JWT.
 
-## 📂 Estrutura do Projeto
+## Estrutura do Projeto
 
 ```text
 📦 SOCIMIN
