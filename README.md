@@ -22,3 +22,7 @@
 │   └── 📂 perfil/         # Dashboard e configurações de usuário
 ├── index.html             # Ponto de entrada (Shell) da aplicação
 └── global.css             # Variáveis de cor e estilos reaproveitáveis
+
+```
+
+## Tutorial de Execução do Projeto
