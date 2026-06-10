@@ -25,4 +25,7 @@
 
 ```
 
-## Tutorial de Execução do Projeto
+## Tutorial de Execução do Projeto Localmente (via Python no Terminal)
+
+* Utilize o comando: python -m http.server 5500
+* Em seguida, acesse o endereço abaixo no seu navegador padrão: http://localhost:5500
