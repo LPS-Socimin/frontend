@@ -1,0 +1,40 @@
+.perfil-card {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+
+.titulo-secao { color: #0288d1; font-size: 24px; margin-bottom: 5px; }
+.texto-handle { color: #888888; font-size: 15px; }
+
+.input-padrao {
+    padding: 12px;
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+    font-size: 15px;
+    font-family: inherit;
+    transition: border-color 0.2s;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.input-padrao:focus {
+    outline: none;
+    border-color: #0288d1;
+    box-shadow: 0 0 5px rgba(2, 136, 209, 0.2);
+}
+
+/* Modificador do botão cancelar baseado no botão moderno global */
+.btn-cancelar {
+    background-color: #f0f9ff;
+    color: #0288d1;
+    border: 2px solid #0288d1;
+    padding: 8px 20px; /* Ajuste por conta da borda grossa */
+}
+
+.btn-cancelar:hover {
+    background-color: #0288d1;
+    color: white;
+}

@@ -1,0 +1,24 @@
+<div class="perfil-card" style="max-width: 600px; margin: 0 auto;">
+    <h2 class="titulo-secao">Editar Meu Perfil</h2>
+    <p class="texto-handle" style="margin-bottom: 20px;">Altere as suas informações públicas e privadas.</p>
+
+    <form id="form-editar-perfil" style="display: flex; flex-direction: column; gap: 15px;">
+        
+        <label style="font-weight: bold; color: #444; font-size: 14px; text-align: left;">Nome de Exibição</label>
+        <input type="text" id="edit-nome" placeholder="Seu Nome" class="input-padrao" required>
+
+        <label style="font-weight: bold; color: #444; font-size: 14px; text-align: left;">Handle (@)</label>
+        <input type="text" id="edit-handle" placeholder="@usuario" class="input-padrao" required>
+        
+        <label style="font-weight: bold; color: #444; font-size: 14px; text-align: left;">Biografia</label>
+        <textarea id="edit-bio" placeholder="Fale um pouco sobre você..." class="input-padrao" rows="3"></textarea>
+
+        <label style="font-weight: bold; color: #444; font-size: 14px; text-align: left;">Novo E-mail</label>
+        <input type="email" id="edit-email" placeholder="novo@email.com" class="input-padrao" required>
+
+        <div style="display: flex; gap: 10px; margin-top: 15px;">
+            <button type="submit" class="btn-moderno" style="flex: 1;">Salvar Alterações</button>
+            <button type="button" id="btn-cancelar-edicao" class="btn-moderno btn-cancelar" style="flex: 1;">Cancelar</button>
+        </div>
+    </form>
+</div>
