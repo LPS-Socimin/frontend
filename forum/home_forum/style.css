@@ -1,0 +1,117 @@
+/* Container base do cartão */
+.perfil-card {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+.titulo-secao { color: #0288d1; font-size: 24px; margin-bottom: 0px; border-bottom: none; padding-bottom: 0; }
+.texto-handle { color: #888888; font-size: 15px; margin-bottom: 0; }
+
+/* Alinhamento horizontal do cabeçalho */
+.forum-topo-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #e0f7fa;
+    padding-bottom: 15px;
+    gap: 15px;
+}
+
+.forum-titulo-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-align: left;
+}
+
+/* Estrutura padrão do Cartão de Postagem */
+.post-card {
+    border: 1px solid #eeeeee;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #fafafa;
+    text-align: left;
+    transition: box-shadow 0.2s;
+}
+
+.post-card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 14px;
+    color: #666;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+}
+
+.post-author { font-weight: bold; color: #333; }
+.post-date { color: #999; font-size: 12px; }
+.post-title { font-size: 18px; color: #0288d1; margin-bottom: 10px; }
+.post-text { font-size: 15px; color: #444; line-height: 1.5; margin-bottom: 15px; }
+
+/* Midia Opcional (Imagem) */
+.post-media { margin-top: 15px; }
+.post-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Link Opcional */
+.post-video-link {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 15px;
+    background-color: #ffebee;
+    color: #c62828;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.post-video-link:hover { background-color: #ffcdd2; }
+
+/* Botão de Voltar */
+.btn-secundario {
+    padding: 10px 20px;
+    border: 2px solid #0288d1;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #f0f9ff;
+    color: #0288d1;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.btn-secundario:hover {
+    background-color: #0288d1;
+    color: white;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 550px) {
+    .forum-topo-container {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+    }
+    .forum-titulo-grupo {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    .btn-secundario {
+        width: 100%;
+    }
+}
