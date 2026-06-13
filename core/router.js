@@ -1,5 +1,9 @@
-async function carregarModulo(caminhoDoModulo, salvarHistorico = true) {
+async function carregarModulo(caminhoCompleto, salvarHistorico = true) {
+    const loader = document.getElementById('global-loader');
+    loader.style.display = 'flex'; // Mostra o loader imediatamente
+
     const root = document.getElementById('app-root');
+    const [caminhoDoModulo, queryString] = caminhoCompleto.split('?');
 
     try {
         const respostaHtml = await fetch(`${caminhoDoModulo}/view.html`);
@@ -16,7 +20,8 @@ async function carregarModulo(caminhoDoModulo, salvarHistorico = true) {
         linkCss.className = 'estilo-dinamico';
         document.head.appendChild(linkCss);
 
-        const respostaJs = await fetch(`${caminhoDoModulo}/controller.js?v=${new Date().getTime()}`);
+        // REMOVIDO: Cache-busting que causava lentidão. O navegador agora gerencia o cache.
+        const respostaJs = await fetch(`${caminhoDoModulo}/controller.js`);
         if (!respostaJs.ok) throw new Error(`JS não encontrado em: ${caminhoDoModulo}`);
         const js = await respostaJs.text();
 
@@ -26,7 +31,7 @@ async function carregarModulo(caminhoDoModulo, salvarHistorico = true) {
         document.body.appendChild(scriptJs);
 
         if (salvarHistorico) {
-            window.history.pushState({ modulo: caminhoDoModulo }, "", `?tela=${caminhoDoModulo}`);
+            window.history.pushState({ modulo: caminhoCompleto }, "", `?tela=${caminhoCompleto}`);
         }
 
     } catch (erro) {
@@ -37,6 +42,8 @@ async function carregarModulo(caminhoDoModulo, salvarHistorico = true) {
                 <p>O caminho <b>"${caminhoDoModulo}"</b> não foi encontrado.</p>
             </div>
         `;
+    } finally {
+        loader.style.display = 'none'; // Esconde o loader ao final, mesmo se der erro.
     }
 }
 
@@ -44,6 +51,7 @@ window.addEventListener('popstate', function(evento) {
     if (evento.state && evento.state.modulo) {
         carregarModulo(evento.state.modulo, false);
     } else {
+        // Carrega a tela inicial se não houver estado
         carregarModulo('auth', false);
     }
 });

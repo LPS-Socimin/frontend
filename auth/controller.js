@@ -43,87 +43,115 @@
     }
 
     // ==========================================
-    // ROTA DE CADASTRO (Validações da Especificação)
+    // ROTA DE CADASTRO (Ajustada à Especificação)
     // ==========================================
     if (formCadastro) {
-        formCadastro.addEventListener('submit', function(e) {
+        formCadastro.addEventListener('submit', async function(e) {
             e.preventDefault();
             limparMensagens();
+
+            const btnSubmit = formCadastro.querySelector('button[type="submit"]');
+            const originalText = btnSubmit.textContent;
+            btnSubmit.disabled = true;
+            btnSubmit.textContent = 'Enviando...';
 
             const handle = document.getElementById('handle-cadastro').value.trim();
             const email = document.getElementById('email-cadastro').value.trim();
             const senha = document.getElementById('senha-cadastro').value;
             const confirmacao = document.getElementById('confirmacao-senha').value;
-
+            
+            // Validação com acúmulo de erros
             let erros = [];
-
-            // 1. Validação: Campos ausentes/inválidos e senhas divergentes
-            if (!handle || !email || !senha || !confirmacao) {
-                erros.push("• Payload com campo inválido ou ausente.");
-            }
-            if (senha !== confirmacao) {
+            if (!handle) erros.push("• O campo 'handle' é obrigatório.");
+            if (!email) erros.push("• O campo 'email' é obrigatório.");
+            if (!senha) erros.push("• O campo 'senha' é obrigatório.");
+            if (!confirmacao) erros.push("• O campo 'confirmação de senha' é obrigatório.");
+            if (senha && confirmacao && senha !== confirmacao) {
                 erros.push("• Senha e confirmação de senha divergentes.");
             }
-            
-            // [AVISO: BACKEND NECESSÁRIO] Simulação de verificação na base de dados
-            // Se o usuário tentar a handle padrão de testes, simula que já existe
-            if (handle.toLowerCase() === '@usuario_teste' || handle === 'usuario_teste') {
-                erros.push("• Esta handle de perfil já existe na base de dados.");
-            }
 
-            // Exibe os erros ou prossegue com o cadastro
             if (erros.length > 0) {
                 mostrarMensagem(msgCadastro, erros.join("<br>"), 'erro');
-            } else {
-                // 2. Recebe dados válidos e senhas iguais
-                // [AVISO: BACKEND NECESSÁRIO] Aqui ocorreria o INSERT na base de dados de perfis
-                mostrarMensagem(msgCadastro, "Sucesso na criação de usuário!", 'sucesso');
-                
-                // Aguarda um pouco e manda para o login
-                setTimeout(() => {
-                    formCadastro.reset();
-                    formCadastro.style.display = 'none';
-                    formLogin.style.display = 'flex';
-                    mostrarMensagem(msgLogin, "Conta criada com sucesso! Faça login.", 'sucesso');
-                }, 1500);
+                btnSubmit.disabled = false;
+                btnSubmit.textContent = originalText;
+                return;
             }
+
+            const resAuth = await Gateway.register(handle, email, senha);
+            
+            if (resAuth.ok) {
+                const resLogin = await Gateway.login(email, senha);
+                if (resLogin.ok) {
+                    localStorage.setItem('socimin_token', resLogin.data.access_token);
+                    const resProfile = await Gateway.criarPerfilInicial(handle, `@${handle}`);
+                    
+                    if (resProfile.ok) {
+                        mostrarMensagem(msgCadastro, "Sucesso na criação de usuário!", 'sucesso');
+                        setTimeout(() => {
+                            formCadastro.reset();
+                            formCadastro.style.display = 'none';
+                            formLogin.style.display = 'flex';
+                            mostrarMensagem(msgLogin, "Conta criada com sucesso! Faça login.", 'sucesso');
+                        }, 1500);
+                    } else {
+                         // Erro na criação do perfil, pode ser handle duplicado
+                        const erroMsg = resProfile.data?.error || "Erro desconhecido ao criar perfil";
+                        erros.push(`• ${erroMsg}`);
+                        mostrarMensagem(msgCadastro, erros.join("<br>"), 'erro');
+                    }
+                }
+            } else {
+                // Erro no cadastro do usuário (email/handle duplicado)
+                const erroMsg = resAuth.data?.error || "Erro ao cadastrar usuário.";
+                erros.push(`• ${erroMsg}`);
+                mostrarMensagem(msgCadastro, erros.join("<br>"), 'erro');
+            }
+
+            btnSubmit.disabled = false;
+            btnSubmit.textContent = originalText;
         });
     }
 
     // ==========================================
-    // ROTA DE LOGIN (Validações da Especificação)
+    // ROTA DE LOGIN (Ajustada à Especificação)
     // ==========================================
     if (formLogin) {
-        formLogin.addEventListener('submit', function(e) {
+        formLogin.addEventListener('submit', async function(e) {
             e.preventDefault();
             limparMensagens();
+            
+            const btnSubmit = formLogin.querySelector('button[type="submit"]');
+            const originalText = btnSubmit.textContent;
+            btnSubmit.disabled = true;
+            btnSubmit.textContent = 'Entrando...';
 
             const email = document.getElementById('email-login').value.trim();
             const senha = document.getElementById('senha-login').value;
 
-            // 1. Recebe payload com campo inválido ou ausente
             if (!email || !senha) {
+                // Mensagem ajustada para a especificação
                 mostrarMensagem(msgLogin, "Erro de solicitação inválida.", 'erro');
+                btnSubmit.disabled = false;
+                btnSubmit.textContent = originalText;
                 return;
             }
 
-            // 2. Recebe email válido mas a validação da senha falha
-            // [AVISO: BACKEND NECESSÁRIO] Verificação criptográfica do hash da senha na base de dados
-            // Para simulação no Front-end: A senha correta deve ser "123456"
-            if (senha !== "12345") {
-                mostrarMensagem(msgLogin, "Divergência detectada: E-mail ou senha incorretos.", 'erro');
-                return;
-            }
+            const res = await Gateway.login(email, senha);
 
-            // 3. Recebe email válido e a validação de senha sucede
-            // [AVISO: BACKEND NECESSÁRIO] Geração e envio do Token JWT real
-            localStorage.setItem('socimin_token', 'token_simulado_jwt_12345');
-            mostrarMensagem(msgLogin, "Autenticado com sucesso! Redirecionando...", 'sucesso');
-            
-            // Redireciona para a home do perfil criado
-            setTimeout(() => {
-                carregarModulo('home_pessoal/perfil');
-            }, 800);
+            if (res.ok) {
+                localStorage.setItem('socimin_token', res.data.access_token);
+                // Mensagem e redirecionamento conforme especificação
+                mostrarMensagem(msgLogin, `Autenticado com sucesso! Token: ${res.data.access_token.substring(0,15)}...`, 'sucesso');
+                
+                setTimeout(() => {
+                    carregarModulo('home_pessoal/perfil');
+                }, 1000);
+            } else {
+                // Backend retorna "Credenciais inválidas", o que é mais seguro do que "divergência detectada"
+                mostrarMensagem(msgLogin, res.data?.error || "Credenciais inválidas.", 'erro');
+                btnSubmit.disabled = false;
+                btnSubmit.textContent = originalText;
+            }
         });
     }
 })();

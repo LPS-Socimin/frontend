@@ -1,14 +1,24 @@
-<div class="perfil-card">
-    <h2>Criar Novo Fórum</h2>
-    
-    <form id="form-criar-forum" style="display: flex; flex-direction: column; gap: 15px; margin-top: 15px;">
+<div class="perfil-layout">
+    <div class="form-container">
+        <header class="form-header">
+            <h2 class="titulo-secao">Criar um Novo Fórum</h2>
+            <p class="texto-handle">Inicie uma nova comunidade sobre um tópico de seu interesse.</p>
+        </header>
         
-        <input type="text" id="input-nome-forum" placeholder="Nome do Fórum" class="input-padrao" required>
-        
-        <div style="display: flex; gap: 10px;">
-            <button type="submit" class="btn-moderno" style="flex: 1;">Criar</button>
-            <button type="button" id="btn-cancelar-forum" class="btn-secundario" style="flex: 1;">Cancelar</button>
-        </div>
-        
-    </form>
+        <form id="form-criar-forum" class="form-edicao">
+            <div class="form-grupo">
+                <label for="input-nome-forum">Nome do Fórum</label>
+                <input type="text" id="input-nome-forum" required placeholder="Ex: Discussões sobre IA Generativa">
+            </div>
+            <div class="form-grupo">
+                <label for="input-desc-forum">Descrição Curta</label>
+                <textarea id="input-desc-forum" rows="4" placeholder="Uma breve descrição sobre os tópicos que serão abordados neste fórum."></textarea>
+            </div>
+            
+            <div class="form-botoes">
+                <button type="submit" class="btn-primario">Criar Fórum</button>
+                <button type="button" id="btn-voltar-forum" class="btn-secundario">Voltar</button>
+            </div>
+        </form>
+    </div>
 </div>
