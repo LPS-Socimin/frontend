@@ -1,115 +1,210 @@
 const Gateway = {
-    validarTokenAutenticacao: async function(tokenRecebido) {
-        return new Promise((resolver) => {
-            setTimeout(() => {
-                if (tokenRecebido === 'token_simulado_jwt_12345') {
-                    resolver({ valido: true, mensagem: 'Usuário autenticado', id_usuario: 101 });
-                } else {
-                    resolver({ valido: false, mensagem: 'Usuário não autenticado' });
-                }
-            }, 500); 
-        });
-    },
+    API_BASE_URL: 'http://localhost:8000',
 
-    // --- LÓGICA DE SIMULAÇÃO DE BANCO DE DADOS (Persistência) ---
-    obterBancoDeDados: function() {
-        const dbStr = localStorage.getItem('socimin_db_perfil');
-        if (dbStr) return JSON.parse(dbStr); 
-        
-        // Adicionadas as flags de controle do Blog Inicial
-        const dbInicial = {
-            nome: 'Estudante de Engenharia',
-            handle: '@usuario_teste', 
-            bio: 'Desenvolvedor da rede Socimin.',
-            email: 'estudante@faculdade.com',
-            hasBlog: false,    // Inicia sem blog
-            blogTitulo: ''     // Sem título inicialmente
+    async request(service, endpoint, options = {}) {
+        const url = `${this.API_BASE_URL}/${service}${endpoint}`;
+        const token = localStorage.getItem('socimin_token');
+
+        const headers = {
+            'Content-Type': 'application/json',
+            ...options.headers
         };
-        localStorage.setItem('socimin_db_perfil', JSON.stringify(dbInicial));
-        return dbInicial;
+
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+
+        const config = {
+            ...options,
+            headers
+        };
+
+        try {
+            const response = await fetch(url, config);
+            let data = null;
+            try {
+                data = await response.json();
+            } catch (e) {
+                // Algumas rotas podem não retornar JSON
+            }
+            return {
+                ok: response.ok,
+                status: response.status,
+                data
+            };
+        } catch (error) {
+            console.error(`Erro na requisição para ${url}:`, error);
+            return {
+                ok: false,
+                error: error.message
+            };
+        }
     },
 
-    salvarBancoDeDados: function(dados) {
-        localStorage.setItem('socimin_db_perfil', JSON.stringify(dados));
+    async validarTokenAutenticacao(token) {
+        if (!token) return { valido: false };
+        const res = await this.request('auth', '/me');
+        if (res.ok) {
+            return { valido: true, mensagem: 'Usuário autenticado', id_usuario: res.data.id, user: res.data };
+        } else {
+            return { valido: false, mensagem: 'Usuário não autenticado' };
+        }
     },
 
-    buscarDadosPerfil: async function(tokenRecebido) {
-        console.log('Gateway: Buscando dados atualizados do perfil...');
-        const db = this.obterBancoDeDados();
+    async login(email, password) {
+        return await this.request('auth', '/login', {
+            method: 'POST',
+            body: JSON.stringify({ email, password })
+        });
+    },
+
+    async register(username, email, password) {
+        return await this.request('auth', '/register', {
+            method: 'POST',
+            body: JSON.stringify({ username, email, password })
+        });
+    },
+
+    async buscarDadosPerfil(tokenOverride) {
+        // Se houver tokenOverride, poderíamos usá-lo, mas o request() já pega do localStorage
+        const res = await this.request('profile', '/');
         
-        return new Promise((resolver) => {
-            setTimeout(() => {
-                if (tokenRecebido === 'token_simulado_jwt_12345') {
-                    resolver({
-                        sucesso: true,
-                        dono_do_perfil: true,
-                        // Retornando a flag hasBlog e blogTitulo para o front-end
-                        dados_publicos: { 
-                            handle: db.handle, 
-                            nome: db.nome, 
-                            bio: db.bio,
-                            hasBlog: db.hasBlog || false,
-                            blogTitulo: db.blogTitulo || ''
-                        },
-                        dados_sensiveis: { email: db.email },
-                        contatos: ['@amigo1', '@amigo2'],
-                        foruns_criados: ['Fórum de Computação'],
-                        postagens_blog: ['Meu primeiro post na LPS!']
-                    });
-                } else {
-                    resolver({
-                        sucesso: true,
-                        dono_do_perfil: false,
-                        dados_publicos: { 
-                            handle: db.handle, 
-                            nome: db.nome, 
-                            bio: db.bio,
-                            hasBlog: db.hasBlog || false,
-                            blogTitulo: db.blogTitulo || ''
-                        },
-                        contatos: ['@amigo1', '@amigo2']
-                    });
-                }
-            }, 500);
+        if (res.ok) {
+            const contatosRes = await this.request('profile', '/contacts');
+            const contatos = contatosRes.ok ? contatosRes.data.map(c => c.handle || c.nickname) : [];
+
+            // Buscar posts do blog do autor
+            const blogRes = await this.request('blog', `/author/${res.data.user_id}`);
+            const posts = blogRes.ok ? blogRes.data.map(p => p.title) : [];
+
+            // Buscar fóruns (exemplo de como integrar)
+            const forumRes = await this.request('forum', `/?user_id=${res.data.user_id}`);
+            const foruns = forumRes.ok && forumRes.data.forums ? forumRes.data.forums.map(f => f.title) : [];
+
+            return {
+                sucesso: true,
+                dono_do_perfil: true,
+                dados_publicos: {
+                    handle: res.data.handle,
+                    nome: res.data.nickname,
+                    bio: res.data.bio,
+                    hasBlog: posts.length > 0,
+                    blogTitulo: posts.length > 0 ? 'Meu Blog' : ''
+                },
+                dados_sensiveis: { email: '' }, 
+                contatos: contatos,
+                foruns_criados: foruns,
+                postagens_blog: posts
+            };
+        } else if (res.status === 404) {
+            return { sucesso: false, erro: 'Perfil não encontrado' };
+        }
+        return { sucesso: false };
+    },
+
+    async atualizarDadosPerfil(token, novosDados) {
+        const res = await this.request('profile', '/', {
+            method: 'PUT',
+            body: JSON.stringify({
+                nickname: novosDados.nome,
+                handle: novosDados.handle,
+                bio: novosDados.bio
+            })
+        });
+        return { sucesso: res.ok, mensagem: res.ok ? 'Perfil atualizado com sucesso!' : 'Erro ao atualizar perfil.' };
+    },
+
+    async criarPerfilInicial(nickname, handle) {
+        return await this.request('profile', '/', {
+            method: 'POST',
+            body: JSON.stringify({ nickname, handle, bio: '' })
         });
     },
 
-    atualizarDadosPerfil: async function(tokenRecebido, novosDados) {
-        console.log('Gateway: Salvando novos dados no banco...');
-        return new Promise((resolver) => {
-            setTimeout(() => {
-                if (tokenRecebido === 'token_simulado_jwt_12345') {
-                    const db = this.obterBancoDeDados();
-                    db.nome = novosDados.nome;
-                    db.bio = novosDados.bio;
-                    db.email = novosDados.email;
-                    db.handle = novosDados.handle; 
-                    this.salvarBancoDeDados(db);
-                    
-                    resolver({ sucesso: true, mensagem: 'Perfil atualizado com sucesso!' });
-                } else {
-                    resolver({ sucesso: false, mensagem: 'Erro de autenticação.' });
-                }
-            }, 500);
+    async buscarPerfilPorHandle(handle) {
+        return await this.request('profile', `/${handle}`);
+    },
+
+    async adicionarContato(contactProfileId) {
+        // Assume que o 'profile_id' será o do usuário logado, a ser determinado pelo backend
+        // ou extraído do token. Por simplicidade, o backend pode resolver.
+        // O endpoint de contatos do profile-service espera profile_id e contact_profile_id.
+        // O profile_id pode ser inferido pelo user_id do token.
+        // Vamos precisar buscar o perfil do usuário logado para obter seu ID de perfil.
+        const myProfileRes = await this.buscarDadosPerfil();
+        if (!myProfileRes.sucesso) return { ok: false, error: "Could not identify own profile to add contact."};
+
+        return await this.request('profile', '/contacts', {
+            method: 'POST',
+            body: JSON.stringify({
+                profile_id: myProfileRes.dados_publicos.id, 
+                contact_profile_id: contactProfileId 
+            })
         });
     },
 
-    // --- NOVO MÉTODO: CRIAR NOVO BLOG ---
-    criarNovoBlog: async function(tokenRecebido, tituloBlog) {
-        console.log('Gateway: Criando novo blog...');
-        return new Promise((resolver) => {
-            setTimeout(() => {
-                if (tokenRecebido === 'token_simulado_jwt_12345') {
-                    const db = this.obterBancoDeDados();
-                    db.hasBlog = true;          // Ativa a flag de que o blog existe
-                    db.blogTitulo = tituloBlog; // Salva o título escolhido
-                    this.salvarBancoDeDados(db);
-                    
-                    resolver({ sucesso: true, mensagem: 'Blog criado no banco com sucesso!' });
-                } else {
-                    resolver({ sucesso: false, mensagem: 'Erro de autenticação.' });
-                }
-            }, 500);
+    async removerContato(contactProfileId) {
+        const myProfileRes = await this.buscarDadosPerfil();
+        if (!myProfileRes.sucesso) return { ok: false, error: "Could not identify own profile to remove contact."};
+        
+        return await this.request('profile', '/contacts', {
+            method: 'DELETE',
+            body: JSON.stringify({
+                profile_id: myProfileRes.dados_publicos.id,
+                contact_profile_id: contactProfileId
+            })
+        });
+    },
+
+    async criarNovoBlog(token, tituloBlog) {
+        const res = await this.request('blog', '/', {
+            method: 'POST',
+            body: JSON.stringify({
+                title: tituloBlog,
+                content: 'Bem-vindo ao meu novo blog!'
+            })
+        });
+        return { sucesso: res.ok, mensagem: res.ok ? 'Blog criado com sucesso!' : 'Erro ao criar blog.' };
+    },
+
+    // --- BLOG SERVICE ---
+    async buscarPostsBlog(authorId = null) {
+        const endpoint = authorId ? `/author/${authorId}` : '/';
+        return await this.request('blog', endpoint);
+    },
+
+    async criarPostagemBlog(titulo, conteudo) {
+        return await this.request('blog', '/', {
+            method: 'POST',
+            body: JSON.stringify({ title: titulo, content: conteudo })
+        });
+    },
+
+    // --- FORUM SERVICE ---
+    async buscarForuns() {
+        return await this.request('forum', '/');
+    },
+
+    async criarForum(titulo, descricao) {
+        return await this.request('forum', '/', {
+            method: 'POST',
+            body: JSON.stringify({ title: titulo, description: descricao })
+        });
+    },
+
+    async buscarPostsForum(forumId) {
+        return await this.request('forum', `/posts?forum_id=${forumId}`);
+    },
+
+    // --- CHAT SERVICE ---
+    async buscarConversas() {
+        return await this.request('chat', '/');
+    },
+
+    async enviarMensagem(chatId, conteudo) {
+        return await this.request('chat', `/${chatId}/messages`, {
+            method: 'POST',
+            body: JSON.stringify({ content: conteudo })
         });
     }
 };
