@@ -1,0 +1,88 @@
+<div id="erro-perfil" style="display: none; text-align: center; padding: 50px;">
+    <h2 style="color: #c62828;">Perfil Não Encontrado</h2>
+    <p id="erro-msg" style="color: #555; margin-top: 10px;">A handle solicitada não existe ou foi desativada.</p>
+    <button id="btn-voltar-erro" class="btn-secundario" style="margin-top: 20px;">Voltar ao Login</button>
+</div>
+
+<div id="conteudo-perfil" class="perfil-layout" style="display: none;">
+    <header class="perfil-header perfil-card">
+        
+        <div class="perfil-foto">
+            <span style="font-size: 40px; color: white;">👤</span>
+        </div>
+        
+        <div class="perfil-info">
+            <h2 id="perfil-nome" class="titulo-nome">Carregando...</h2>
+            <p id="perfil-handle" class="texto-handle">@...</p>
+            <p id="perfil-bio" style="color: #666; font-style: italic; margin-bottom: 15px;">Carregando biografia...</p>
+            <!-- Barra de ações rápida (sempre visível) -->
+            <div class="perfil-actions" style="display:flex; gap:10px; margin-top:10px; flex-wrap:wrap;">
+                <button id="btn-home-forum" class="btn-secundario">Ir para Fórum</button>
+                <button id="btn-home-blog" class="btn-secundario">Ir para Blog</button>
+                <button id="btn-chat-global" class="btn-secundario">Abrir Chat</button>
+                <!-- Botão de editar perfil (visível apenas ao dono) -->
+                <button id="btn-editar-perfil-header" class="btn-secundario" style="display:none;">Editar Perfil</button>
+            </div>
+
+            <div id="area-edicao" class="area-edicao" style="display: none;">
+                <p class="texto-email">E-mail oculto: <span id="perfil-email"></span></p>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+                    <button id="btn-desativar-conta" class="btn-secundario" style="color: #c62828; border-color: #ffcdd2; background-color: #ffebee;">Desativar Conta</button>
+                    <button id="btn-sair" class="btn-secundario btn-sair">Sair da Conta</button>
+                </div>
+            </div>
+
+            <!-- (logout button moved to header) -->
+
+            <div id="area-interacao" style="display: none; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
+                <button id="btn-add-contato" class="btn-primario" style="display: none;">+ Adicionar Contato</button>
+                <button id="btn-rem-contato" class="btn-secundario" style="display: none; color: #c62828; border-color: #ffcdd2;">Remover Contato</button>
+                <button id="btn-chat-direto" class="btn-secundario">Enviar Mensagem</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="perfil-corpo">
+        <main class="perfil-main">
+            
+            <section id="area-forum" class="perfil-card" style="display: none;">
+                <h3 class="titulo-secao">Fóruns</h3>
+                
+                <h4 class="subtitulo-lista">Criados por este perfil</h4>
+                <ul id="lista-foruns" class="lista-itens"></ul>
+                
+                <div id="area-foruns-acompanhados" style="display: none;">
+                    <h4 class="subtitulo-lista" style="margin-top: 15px;">Acompanhados</h4>
+                    <ul id="lista-foruns-acompanhados" class="lista-itens"></ul>
+                </div>
+
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px;">
+                    <button id="btn-criar-forum" class="btn-primario" style="display: none;">+ Criar Fórum</button>
+                    <button id="btn-buscar-forum" class="btn-secundario">Buscar Fóruns</button>
+                </div>
+            </section>
+            
+            <section id="area-blog" class="perfil-card" style="display: none;">
+                <h3 class="titulo-secao">Blog Pessoal</h3>
+                <ul id="lista-posts" class="lista-itens"></ul>
+                
+                <div id="area-botoes-blog" style="display: none; margin-top: 10px; gap: 10px; flex-wrap: wrap;">
+                    <button id="btn-acessar-blog" class="btn-primario">Acessar Meu Blog</button>
+                    <button id="btn-criar-blog" class="btn-secundario">Criar Novo Blog</button>
+                </div>
+            </section>
+            
+            <section id="area-chat" class="perfil-card" style="display: none;">
+                <h3 class="titulo-secao">Conversas e Mensagens</h3>
+                <ul id="lista-conversas" class="lista-itens"></ul>
+                
+                <div id="area-botoes-chat" style="display: none; margin-top: 10px; gap: 10px; flex-wrap: wrap;">
+                    <button id="btn-iniciar-chat" class="btn-primario">Nova Conversa</button>
+                </div>
+            </section>
+        </main>
+        
+        <aside class="perfil-sidebar">
+        </aside>
+    </div>
+</div>

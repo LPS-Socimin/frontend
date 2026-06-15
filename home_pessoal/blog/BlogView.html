@@ -1,0 +1,55 @@
+<div id="erro-blog" style="display: none; text-align: center; padding: 50px;">
+    <h2 style="color: #c62828;">Blog Não Encontrado</h2>
+    <p style="color: #555; margin-top: 10px;">A handle solicitada não possui um blog ativo ou ele foi apagado.</p>
+    <button id="btn-voltar-erro" class="btn-secundario" style="margin-top: 20px;">Voltar</button>
+</div>
+
+<div id="conteudo-blog" class="perfil-layout" style="display: none;">
+    <div class="perfil-card" style="max-width: 800px; margin: 0 auto;">
+        
+        <header class="blog-topo-container">
+            <div class="blog-titulo-grupo">
+                <h2 id="blog-titulo" class="titulo-secao">Carregando Blog...</h2>
+                <p id="blog-handle" class="texto-handle">@...</p>
+            </div>
+            <button id="btn-voltar-inicio" class="btn-secundario">Voltar ao Login</button>
+        </header>
+
+        <div id="area-dono-blog" style="display: none; background-color: #f9f9f9; padding: 15px; border-radius: 8px; border: 1px dashed #dddddd; margin-bottom: 20px;">
+            <p style="font-size: 13px; color: #555; margin-bottom: 10px; font-weight: bold;">Painel do Proprietário:</p>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button id="btn-nova-postagem" class="btn-primario">+ Nova Postagem</button>
+                <button id="btn-apagar-blog" class="btn-secundario" style="color: #c62828; border-color: #ffcdd2; background-color: #ffebee;">Apagar Meu Blog</button>
+            </div>
+        </div>
+
+        <div id="area-interacao-blog" style="display: none; margin-bottom: 20px;">
+            <button id="btn-seguir-blog" class="btn-primario">⭐ Seguir este Blog</button>
+            <button id="btn-deixar-seguir" class="btn-secundario" style="display: none;">Deixar de Seguir</button>
+        </div>
+
+        <div style="margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid #eee;">
+            <p style="font-size: 13px; color: #777; margin-bottom: 8px;">Procurar outros blogs na rede:</p>
+            <form id="form-busca-blog" style="display: flex; gap: 10px;">
+                <input type="text" id="input-busca-blog" placeholder="Palavras-chave ou @handle..." class="input-padrao" style="flex: 1;" required>
+                <button type="submit" class="btn-secundario">Buscar</button>
+            </form>
+            <div id="resultados-busca-blog" style="margin-top: 15px;"></div>
+        </div>
+
+        <h3 class="subtitulo-lista" style="font-size: 16px; margin-bottom: 15px; color: #333;">Postagens</h3>
+        <div id="feed-blogs" style="display: flex; flex-direction: column; gap: 20px;">
+            
+            <article class="post-card">
+                <div class="post-header">
+                    <span class="post-author" id="exemplo-author">👤 @estudante_eng</span>
+                    <span class="post-date">Hoje, 10:30</span>
+                </div>
+                <h3 class="post-title">A importância da Engenharia de Software</h3>
+                <p class="post-text">A arquitetura baseada em LPS ajuda muito na reutilização de código e na criação de variações do mesmo sistema.</p>
+                <button class="btn-secundario" style="font-size: 12px; padding: 5px 10px; margin-top: 10px;">Ler Postagem Completa</button>
+            </article>
+
+        </div>
+        </div>
+</div>

@@ -1,0 +1,19 @@
+<div class="perfil-layout">
+    <div class="perfil-card" style="max-width: 600px; margin: 0 auto;">
+        <h2 class="titulo-secao">Nova Postagem</h2>
+        <form id="form-postagem" style="display: flex; flex-direction: column; gap: 12px;">
+            <!-- ID do post e Autor removidos: gerenciados pelo backend -->
+            <input type="text" id="titulo-post" placeholder="Título da Postagem" class="input-padrao" required>
+            <textarea id="conteudo-post" placeholder="Escreva algo incrível..." class="input-padrao" rows="5" required></textarea>
+            <label style="font-weight:bold; color:#444;">Imagem (opcional)</label>
+            <input type="file" id="imagem-file-post" accept="image/*" class="input-padrao">
+            <small style="color:#666">Selecione um arquivo de imagem para upload ou deixe em branco para não enviar.</small>
+            <label style="font-weight:bold; color:#444; margin-top:6px;">Link do Vídeo (Opcional)</label>
+            <input type="text" id="video-post" placeholder="https://youtube.com/..." class="input-padrao">
+            <div style="display:flex; gap:10px;">
+                <button type="submit" class="btn-primario" style="flex:1;">Publicar Post</button>
+                <button type="button" id="btn-cancelar-post" class="btn-secundario" style="flex:1;">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>

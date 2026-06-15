@@ -1,0 +1,29 @@
+<div class="perfil-card" style="max-width: 600px; margin: 0 auto;">
+    <h2 class="titulo-secao">Criar Novo Blog</h2>
+    <p class="texto-handle" style="margin-bottom: 12px;">Dê um título e conteúdo ao seu novo espaço; você pode adicionar imagem ou vídeo opcionalmente.</p>
+
+    <form id="form-criar-blog" style="display: flex; flex-direction: column; gap: 12px;">
+        <label style="font-weight:600;">ID do Post (apenas visual)</label>
+        <input type="text" id="criarblog-post-id" readonly placeholder="(gerado pelo backend)">
+        <label style="font-weight:600;">Autor (ID do usuário logado)</label>
+        <input type="text" id="criarblog-author-id" readonly>
+        <label style="font-weight: bold; color: #444; font-size: 14px; text-align: left;">Título do Blog</label>
+        <input type="text" id="input-titulo-blog" placeholder="Ex: Meu Diário de Engenharia" class="input-padrao" required>
+
+        <label style="font-weight: bold; color: #444; font-size: 14px;">Conteúdo Inicial</label>
+        <textarea id="input-conteudo-blog" rows="6" class="input-padrao" placeholder="Uma breve introdução para seu blog (obrigatório)" required></textarea>
+
+        <label style="font-weight: bold; color: #444; font-size: 14px;">ID da Imagem (opcional)</label>
+        <input type="text" id="input-imagem-id-blog" placeholder="Informe image_id se disponível" class="input-padrao">
+        <small style="color:#666">Se preferir referenciar uma imagem já armazenada, informe seu ID acima. O upload direto não é necessário.</small>
+
+        <label style="font-weight: bold; color: #444; font-size: 14px;">Link do Vídeo (Opcional)</label>
+        <input type="text" id="input-video-blog" placeholder="https://youtube.com/..." class="input-padrao">
+
+        <div style="display: flex; gap: 10px; margin-top: 10px;">
+            <button type="submit" class="btn-moderno" style="flex: 1;">Criar Blog</button>
+            <button type="button" id="btn-cancelar-blog" class="btn-secundario" style="flex: 1;">Cancelar</button>
+        </div>
+
+    </form>
+</div>
