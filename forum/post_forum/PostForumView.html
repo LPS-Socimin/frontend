@@ -1,0 +1,34 @@
+<div class="perfil-layout">
+    <div class="perfil-card" style="max-width: 600px; margin: 0 auto;">
+        <h2 class="titulo-secao">Criar Novo Post</h2>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+            <label style="font-weight:600;">Título do Fórum</label>
+            <input type="text" id="post-forum-title-input" readonly>
+        </div>
+
+        <form id="form-create-post" class="form-edicao">
+            <div class="form-grupo">
+                <label for="post-title">Título do Post</label>
+                <input type="text" id="post-title" required>
+            </div>
+            <div class="form-grupo">
+                <label for="post-content">Conteúdo</label>
+                <textarea id="post-content" rows="6" required></textarea>
+            </div>
+            <div class="form-grupo">
+                <label for="post-image-file">Imagem (opcional)</label>
+                <input type="file" id="post-image-file" accept="image/*">
+                <small style="color:#666">Selecione um arquivo para upload ou deixe em branco para não enviar imagem.</small>
+            </div>
+            <div class="form-grupo">
+                <label for="post-video">Link do Vídeo (Opcional)</label>
+                <input type="text" id="post-video" placeholder="Deixe em branco se não houver">
+            </div>
+            
+            <div class="form-botoes">
+                <button type="submit" class="btn-primario">Publicar Post</button>
+                <button type="button" id="btn-cancel-post" class="btn-secundario">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+/* Estilos para o formulário de criação de post */
+#form-create-post {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Align visual identity with site */
+.perfil-layout { max-width: 800px; margin: 40px auto; padding: 0 20px; }
+.perfil-card { background:#fff; padding:26px; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.06); }
+.form-grupo { display:flex; flex-direction:column; gap:8px; }
+.form-grupo label { font-weight:600; color:#333; }
+input[type="text"], textarea, input[type="file"] { padding:10px; border:1px solid #ddd; border-radius:8px; font-size:15px; width:100%; box-sizing:border-box; }
+input[type="text"]:focus, textarea:focus, input[type="file"]:focus { outline:none; border-color:#0288d1; box-shadow:0 0 6px rgba(2,136,209,0.12); }
+.form-botoes { display:flex; gap:10px; }
+.form-botoes .btn-primario, .form-botoes .btn-secundario { min-width:140px; }
+small { color:#666; }
+
+@media (max-width:600px) { .form-botoes { flex-direction:column; } .perfil-card { padding:18px; } }
