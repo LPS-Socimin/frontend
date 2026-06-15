@@ -46,4 +46,4 @@ Observação: este script (`serve_root.py`) foi adicionado ao repositório e faz
 Instale a extensão "Live Server" e clique com o botão direito em `RootIndex.html` → "Open with Live Server".
 
 ## Dica:
-- Execute sempre os comandos a partir da pasta `frontend-main` para não haver erros de caminho.
+- Execute sempre os comandos a partir da pasta `frontend` para não haver erros de caminho.
