@@ -1,0 +1,220 @@
+/* Estilo para a Home de Fóruns - Baseado em AuthStyle.css */
+
+.forum-home-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* ----- Base visual compartilhada com Blog/Profile ----- */
+.perfil-layout {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.perfil-card {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.titulo-secao {
+    color: #0288d1;
+    font-size: 28px;
+    margin-bottom: 6px;
+    font-weight: 700;
+}
+
+.texto-handle {
+    color: #666666;
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+/* Botões padronizados (pílula) */
+.btn-primario {
+    background-color: #0288d1;
+    color: #ffffff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.btn-primario:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(2,136,209,0.12); }
+
+.btn-secundario {
+    padding: 8px 16px;
+    border: 2px solid #0288d1;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: transparent;
+    color: #0288d1;
+}
+.btn-secundario:hover { background-color: #0288d1; color:#fff; }
+
+/* Ajustes do formulário de busca */
+.search-container input[type="search"], #forum-search-input {
+    flex: 1 1 auto;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid #e6eef3;
+    background: #f7fbfc;
+}
+
+/* Wrapper usado na view para aplicar cartão */
+.perfil-card-like { display: block; }
+
+
+/* Card branco central como no blog/perfil */
+.forum-home-container > .perfil-card-like {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.search-container {
+    display: flex;
+    gap: 10px;
+    margin: 25px 0;
+    align-items: center;
+}
+
+/* Header layout and button sizing for consistent identity */
+.forum-topo-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.forum-topo-container .titulo-secao { margin: 0; }
+
+.forum-topo-container .btn-secundario {
+    padding: 8px 14px;
+    border-radius: 18px;
+    font-weight: 600;
+    border-width: 2px;
+}
+
+/* Search input and button adjustments */
+#forum-search-input {
+    flex-grow: 1;
+    padding: 12px 16px;
+    min-width: 260px;
+    border-radius: 10px;
+}
+
+.search-container button.btn-primario {
+    padding: 10px 14px;
+    border-radius: 18px;
+    min-width: 72px;
+}
+
+/* Make create button visually prominent and centered */
+.create-forum-container { margin-bottom: 25px; text-align: center; }
+.create-forum-container .btn-primario { padding: 10px 18px; border-radius: 20px; }
+
+#forum-search-input {
+    flex-grow: 1;
+    padding: 12px 15px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #dcdcdc;
+    background-color: #f5f5f5;
+    transition: all 0.2s ease-in-out;
+}
+
+#forum-search-input:focus {
+    background-color: #fff;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+    outline: none;
+}
+
+.create-forum-container {
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.feed-foruns-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.forum-card {
+    background: #ffffff;
+    border: 1px solid #eaeef0;
+    border-radius: 10px;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+}
+
+.forum-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.forum-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    padding: 20px 22px;
+}
+
+/* Ajustes finos: botão de busca e formulário de criação */
+.search-container button {
+    margin-left: 8px;
+    padding: 10px 14px;
+    border-radius: 18px;
+}
+
+/* Formulário Criar Fórum */
+.form-container { max-width: 520px; margin: 0 auto; }
+.form-header { text-align: center; margin-bottom: 18px; }
+.form-grupo { margin-bottom: 14px; }
+.form-grupo label { display:block; margin-bottom:6px; color:#444; font-weight:600; }
+.form-grupo input[type="text"], .form-grupo textarea {
+    width:100%; padding:12px; border-radius:8px; border:1px solid #e6eef3; background:#f7fbfc;
+}
+.form-botoes { display:flex; gap:12px; justify-content:center; align-items:center; margin-top:10px; }
+.form-botoes .btn-primario, .form-botoes .btn-secundario { min-width:140px; }
+
+@media (max-width:600px){
+    .search-container { flex-direction: column; align-items: stretch; }
+    .search-container button { margin-left:0; margin-top:8px; }
+    .form-botoes { flex-direction: column; }
+}
+
+.forum-title {
+    margin: 0 0 8px 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #0288d1; /* Azul padronizado do site */
+}
+
+.forum-description {
+    margin: 0;
+    color: #555;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.forum-card-footer {
+    background: #f8f9fa;
+    padding: 12px 25px;
+    border-top: 1px solid #e0e0e0;
+    font-size: 0.8rem;
+    color: #777;
+    text-align: right;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
