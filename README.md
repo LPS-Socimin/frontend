@@ -14,17 +14,26 @@ Projeto desenvolvido para disciplina de Tópicos em Engenharia de Software: Proj
 
 ```text
 📦 SOCIMIN
-├── 📂 auth/               # Módulo de Autenticação (Login/Cadastro)
-├── 📂 chat/               # Módulo de Mensagens Privadas
-├── 📂 core/               # Núcleo da Aplicação
-│   ├── gateway.js         # Simulador de Banco de Dados e API
-│   └── router.js          # Motor de roteamento SPA
-├── 📂 forum/              # Módulo de Fóruns Públicos
-├── 📂 home_pessoal/       # Ecossistema do Perfil e Blog
-│   ├── 📂 blog/           # Lógica do Blog Pessoal
-│   └── 📂 perfil/         # Dashboard e configurações de usuário
-├── RootIndex.html         # Ponto de entrada (Shell) da aplicação
-└── global.css             # Variáveis de cor e estilos reaproveitáveis
+├── 📂 auth/                           # Módulo de Autenticação (Login/Cadastro)
+├── 📂 chat/                           # Módulo de Mensagens Privadas
+│   ├── 📂 inbox/                      # Módulo de conversas (caixa de entrada)
+├── 📂 core/                           # Núcleo da Aplicação
+│   ├── gateway.js                      # Simulador de Banco de Dados e API
+│   └── router.js                       # Motor de roteamento SPA
+├── 📂 forum/                          # Módulo de Fóruns Públicos
+│   ├── 📂 home_forum/                 # Lógica do Fórum Pessoal
+│        └── 📂 criar_forum/           # Módulo de criação de Fórum
+│   └── 📂 post_forum/                 # Lógica de postagem de Fórum
+│   ├── 📂 view_forum/                 # Lógica de tela do Fórum
+├── 📂 home_pessoal/                   # Ecossistema do Perfil e Blog
+│   ├── 📂 blog/                       # Lógica do Blog Pessoal
+│        └── 📂 criar_blog/            # Módulo de criação de Blog
+│        └── 📂 post_pessoal/          # Lógica de posto em Blog Pessoal
+│   └── 📂 perfil/                     # Dashboard e configurações de usuário
+│       └── 📂 editar perfil/          # Módulo de edição de Perfil
+├── RootIndex.html                     # Ponto de entrada (Shell) da aplicação
+└── global.css                         # Variáveis de cor e estilos reaproveitáveis
+└── serve_root.py                      # Script para rodar o frontend
 
 ```
 
