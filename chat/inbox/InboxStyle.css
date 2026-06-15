@@ -1,0 +1,124 @@
+/* Chat Inbox styles: improved visual identity */
+
+.chat-inbox {
+	max-width: 980px;
+	margin: 24px auto;
+	padding: 12px;
+	font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+	color: #222;
+}
+
+.chat-card {
+	background: linear-gradient(180deg, #ffffff 0%, #fbfbfd 100%);
+	border-radius: 12px;
+	box-shadow: 0 6px 18px rgba(20,30,60,0.08);
+	padding: 18px;
+	border: 1px solid rgba(30,40,70,0.03);
+}
+
+.titulo-secao {
+	margin: 0 0 12px 0;
+	font-size: 20px;
+	color: #2b3a67;
+	letter-spacing: 0.2px;
+}
+
+.lista-itens {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	margin-bottom: 14px;
+}
+
+.lista-itens > div {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 12px;
+	border-radius: 10px;
+	transition: background .12s ease, transform .06s ease;
+	background: #fff;
+	border: 1px solid rgba(30,40,70,0.04);
+}
+
+.lista-itens > div:hover {
+	background: linear-gradient(90deg, rgba(240,246,255,0.9), #fff);
+	transform: translateY(-2px);
+	box-shadow: 0 6px 16px rgba(30,40,60,0.06);
+}
+
+.lista-itens .avatar {
+	width: 44px;
+	height: 44px;
+	border-radius: 10px;
+	background: linear-gradient(135deg,#7b61ff,#2ad5d8);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: white;
+	font-weight: 600;
+	flex-shrink: 0;
+}
+
+.lista-itens .meta {
+	flex: 1 1 auto;
+}
+
+.lista-itens .meta .title {
+	font-weight: 600;
+	color: #1f2a44;
+}
+
+.lista-itens .meta .snippet {
+	color: #6b7280;
+	font-size: 13px;
+	margin-top: 4px;
+}
+
+.lista-itens .time {
+	color: #9aa1b2;
+	font-size: 12px;
+	white-space: nowrap;
+}
+
+.mock-badge {
+	display: inline-block;
+	background: #fff7e6;
+	color: #8a5a00;
+	border: 1px solid #ffe8b5;
+	padding: 4px 8px;
+	border-radius: 999px;
+	font-size: 12px;
+	margin-left: 8px;
+}
+
+.btn-secundario, .btn-primario {
+	border-radius: 8px;
+	padding: 8px 12px;
+	border: 1px solid rgba(30,40,70,0.08);
+	cursor: pointer;
+}
+
+.btn-secundario {
+	background: #fff;
+}
+
+.btn-primario {
+	background: linear-gradient(90deg,#5061f8,#2ad5d8);
+	color: white;
+	border: none;
+}
+
+/* Small note text under list */
+.lista-itens .note {
+	padding: 10px 12px;
+	color: #64748b;
+	font-size: 13px;
+}
+
+@media (max-width: 720px) {
+	.chat-card { padding: 14px; }
+	.lista-itens > div { padding: 10px; }
+	.lista-itens .avatar { width: 40px; height: 40px; }
+}
+
