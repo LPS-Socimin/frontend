@@ -23,8 +23,8 @@ Projeto desenvolvido para disciplina de Tópicos em Engenharia de Software: Proj
 ├── 📂 forum/                          # Módulo de Fóruns Públicos
 │   ├── 📂 home_forum/                 # Lógica do Fórum Pessoal
 │        └── 📂 criar_forum/           # Módulo de criação de Fórum
-│   └── 📂 post_forum/                 # Lógica de postagem de Fórum
-│   ├── 📂 view_forum/                 # Lógica de tela do Fórum
+│   ├── 📂 post_forum/                 # Lógica de postagem de Fórum
+│   └── 📂 view_forum/                 # Lógica de tela do Fórum
 ├── 📂 home_pessoal/                   # Ecossistema do Perfil e Blog
 │   ├── 📂 blog/                       # Lógica do Blog Pessoal
 │        └── 📂 criar_blog/            # Módulo de criação de Blog
@@ -32,7 +32,7 @@ Projeto desenvolvido para disciplina de Tópicos em Engenharia de Software: Proj
 │   └── 📂 perfil/                     # Dashboard e configurações de usuário
 │       └── 📂 editar perfil/          # Módulo de edição de Perfil
 ├── RootIndex.html                     # Ponto de entrada (Shell) da aplicação
-└── global.css                         # Variáveis de cor e estilos reaproveitáveis
+├── global.css                         # Variáveis de cor e estilos reaproveitáveis
 └── serve_root.py                      # Script para rodar o frontend
 
 ```
